@@ -31,8 +31,8 @@ class User {
         }
     }
 
+
     static deleteUser(req, res) {
-        
         try {
             const idToDelete = parseInt(req.params.id)
             if(User.users.findIndex(u=>u.id==idToDelete)!=-1){
