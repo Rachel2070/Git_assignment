@@ -27,7 +27,6 @@ function validateAllProprtiesFull(req, res, next) {
     }
 }
 
-
 function validateEmail(req, res, next) {
     const email = req.body.email;
 
