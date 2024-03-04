@@ -16,12 +16,11 @@ class User {
     static updateUser(req, res) {
         let index = User.users.findIndex(x => x.id === parseInt(req.params.id));
         if (index != -1) {
-            // Check each parameter individually and update the user's attributes if provided
             if (req.body.fullName) {
                 User.users[index].fullName = req.body.fullName;
             }
             if (req.body.email) {
-                User.users[index].email = req.query.email;
+                User.users[index].email = req.body.email;
             }
             if (req.body.tel) {
                 User.users[index].tel = req.body.tel;
@@ -38,10 +37,10 @@ class User {
             const idToDelete = parseInt(req.params.id)
             if(User.users.findIndex(u=>u.id==idToDelete)!=-1){
                 User.users = User.users.filter(u => u.id != idToDelete)
-                res.send("user deleted succssesfully")
+                res.send("user deleted succssesfully").status(200)
             }
             else{
-                res.send("user not found")
+                res.send("user not found").status(404)
             }
         }
         catch (err) {
@@ -50,7 +49,7 @@ class User {
     }
 
     static getUserById(req, res) {
-        let index = User.users.findIndex(x => x.id = parseInt(req.params.id))
+        let index = User.users.findIndex(x => x.id ==(req.params.id))
         if (index != -1) {
             res.send(User.users[index]).status(200)
         }
