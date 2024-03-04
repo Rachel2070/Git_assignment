@@ -10,6 +10,7 @@ class User {
     static createUser(req, res) {
         let newUser = new User(User.users.length + 1, req.body.fullName, req.body.email, req.body.tel)
         User.users.push(newUser)
+        res.send(newUser).status(200)
     }
 
     static updateUser(req, res) {
@@ -19,7 +20,7 @@ class User {
             if (req.body.fullName) {
                 User.users[index].fullName = req.body.fullName;
             }
-            if (req.query.email) {
+            if (req.body.email) {
                 User.users[index].email = req.query.email;
             }
             if (req.body.tel) {
@@ -32,9 +33,16 @@ class User {
     }
 
     static deleteUser(req, res) {
+        
         try {
-            User.users = User.users.filter(u => u.id != parseInt(req.params.id))
-            // User.users = [...newArr]
+            const idToDelete = parseInt(req.params.id)
+            if(User.users.findIndex(u=>u.id==idToDelete)!=-1){
+                User.users = User.users.filter(u => u.id != idToDelete)
+                res.send("user deleted succssesfully")
+            }
+            else{
+                res.send("user not found")
+            }
         }
         catch (err) {
             console.log(err).status(404)
