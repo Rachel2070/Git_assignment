@@ -1,4 +1,5 @@
 const userModel = require('./data/model')
+
 function createUser(){
     userModel.User.createUser()
 }
