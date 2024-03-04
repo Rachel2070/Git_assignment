@@ -40,7 +40,7 @@ class User {
                 res.send("user deleted succssesfully").status(200)
             }
             else{
-                res.send("user not found")
+                res.send("user not found").status(404)
             }
         }
         catch (err) {
