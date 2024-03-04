@@ -31,7 +31,6 @@ class User {
         }
     }
 
-
     static deleteUser(req, res) {
         try {
             User.users = User.users.filter(u => u.id != parseInt(req.params.id))
