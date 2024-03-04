@@ -7,6 +7,6 @@ app.use(bodyParser.json())
 
 app.use('/',userRouter)
 
-app.listen(port,()=>{
+app.listen(port, () => {
     console.log("server is runing");
 })
