@@ -49,7 +49,7 @@ class User {
     }
 
     static getUserById(req, res) {
-        let index = User.users.findIndex(x => x.id = parseInt(req.params.id))
+        let index = User.users.findIndex(x => x.id ==(req.params.id))
         if (index != -1) {
             res.send(User.users[index]).status(200)
         }
