@@ -20,7 +20,7 @@ class User {
                 User.users[index].fullName = req.body.fullName;
             }
             if (req.body.email) {
-                User.users[index].email = req.query.email;
+                User.users[index].email = req.body.email;
             }
             if (req.body.tel) {
                 User.users[index].tel = req.body.tel;
@@ -49,7 +49,7 @@ class User {
     }
 
     static getUserById(req, res) {
-        let index = User.users.findIndex(x => x.id = parseInt(req.params.id))
+        let index = User.users.findIndex(x => x.id ==(req.params.id))
         if (index != -1) {
             res.send(User.users[index]).status(200)
         }
