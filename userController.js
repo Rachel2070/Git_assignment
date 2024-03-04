@@ -17,4 +17,5 @@ function getUserById(req, res){
 }
 
 
+
 module.exports={createUser, updateUser, deleteUser, getUserById}

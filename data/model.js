@@ -20,7 +20,7 @@ class User {
                 User.users[index].fullName = req.body.fullName;
             }
             if (req.body.email) {
-                User.users[index].email = req.query.email;
+                User.users[index].email = req.body.email;
             }
             if (req.body.tel) {
                 User.users[index].tel = req.body.tel;
@@ -31,8 +31,8 @@ class User {
         }
     }
 
+
     static deleteUser(req, res) {
-        
         try {
             const idToDelete = parseInt(req.params.id)
             if(User.users.findIndex(u=>u.id==idToDelete)!=-1){
