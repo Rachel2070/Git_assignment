@@ -51,5 +51,6 @@ class User {
         }
     }
 }
+
 User.users = [{ id: 1, fullName: "fhjk", email: "fdfgvb", tel: "ghjk" }]
 module.exports = User
