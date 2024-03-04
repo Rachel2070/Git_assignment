@@ -30,7 +30,6 @@ function validateAllProprtiesFull(req, res, next) {
 
 function validateEmail(req, res, next) {
     const email = req.body.email;
-
     if ((!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))&& req.method=='POST') {
         res.send("your email address is missing or invalid").status(400)
     }
