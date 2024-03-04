@@ -31,7 +31,6 @@ class User {
         }
     }
 
-
     static deleteUser(req, res) {
         try {
             const idToDelete = parseInt(req.params.id)
