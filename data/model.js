@@ -1,63 +1,78 @@
-class User {
-
-    constructor(id, fullName, email, tel) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.tel = tel;
-    }
-
-    static createUser(req, res) {
-        let newUser = new User(User.users.length + 1, req.body.fullName, req.body.email, req.body.tel)
-        User.users.push(newUser)
-        res.send(newUser).status(200)
-    }
-
-    static updateUser(req, res) {
-        let index = User.users.findIndex(x => x.id === parseInt(req.params.id));
-        if (index != -1) {
-            if (req.body.fullName) {
-                User.users[index].fullName = req.body.fullName;
-            }
-            if (req.body.email) {
-                User.users[index].email = req.body.email;
-            }
-            if (req.body.tel) {
-                User.users[index].tel = req.body.tel;
-            }
-            res.send(User.users[index]).status(200);
-        } else {
-            res.send("User not found").status(404);
-        }
-    }
+const User = require('./mongooseSchema')
 
 
-    static deleteUser(req, res) {
-        try {
-            const idToDelete = parseInt(req.params.id)
-            if(User.users.findIndex(u=>u.id==idToDelete)!=-1){
-                User.users = User.users.filter(u => u.id != idToDelete)
-                res.send("user deleted succssesfully").status(200)
-            }
-            else{
-                res.send("user not found").status(404)
-            }
-        }
-        catch (err) {
-            console.log(err).status(404)
-        }
-    }
-
-    static getUserById(req, res) {
-        let index = User.users.findIndex(x => x.id ==(req.params.id))
-        if (index != -1) {
-            res.send(User.users[index]).status(200)
-        }
-        else {
-            res.send("user not found").status(404)
-        }
+async function createUser(req, res) {
+    try {
+        const newUser = new User({
+            id: req.body.id,
+            fullName: req.body.fullName,
+            email: req.body.email,
+            tel: req.body.tel
+        })
+        await newUser.save()
+            res.send(`user created ${newUser}`).status(200)
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.send('Internal Server Error').status(500);
     }
 }
 
-User.users = [{ id: 1, fullName: "fhjk", email: "fdfgvb", tel: "ghjk" }]
-module.exports = User
+async function updateUser(req, res) {
+    try {
+        const tempUser = await User.findOne({ id: req.params.id })
+        if (!tempUser) {
+            return res.send("This id does not exist").status(404)
+        }
+        else {
+            if (req.body.fullName) {
+                tempUser.fullName = req.body.fullName;
+            }
+            if (req.body.email) {
+                tempUser.email = req.body.email;
+            }
+            if (req.body.tel) {
+                tempUser.tel = req.body.tel;
+            }
+            const userToUpdate = await User.findOneAndUpdate({ id: req.params.id }, tempUser, { new: true })
+            res.send(`user updated ${userToUpdate}`)
+        }
+    }
+    catch (err) {
+        console.error('Error updating user:', err);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function deleteUser(req, res) {
+    try {
+        const userToDelete = await User.findOneAndDelete({ id: req.params.id })
+        if (!userToDelete) {
+            return res.send("This id does not exist").status(404)
+        }
+        res.send('user deleted').status(200)
+    }
+    catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+}
+
+async function getUserById(req, res) {
+    try{
+        const findUser = await User.findOne({ id: req.params.id })
+    if (!findUser) {
+        return res.send("This id does not exist").status(404)
+    }
+    res.send(findUser).status(200)
+    }
+    catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).send('Internal Server Error');
+    } 
+}
+
+module.exports = { createUser, updateUser, deleteUser, getUserById }
+
+
+
