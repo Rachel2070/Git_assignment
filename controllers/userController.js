@@ -12,10 +12,10 @@ async function deleteUser(req, res) {
     try {
         const user = await userService.deleteUser(req.params.id)
         if (!user) {
-            res.status(404).send('user not found')
+            res.status(404).send(`user not found`)
         }
         else{
-            res.send('user was deleted').status(200)
+            res.send(`user was deleted`).status(200)
         }
     }
     catch (err) {
@@ -27,7 +27,7 @@ async function getUserById(req, res) {
     try {
         const user = await userService.getUserById(req.params.id)
         if (!user) {
-            res.status(404).send('user not found')
+            res.status(404).send(`user not found`)
         }
         else{
             res.status(200).send(user)

@@ -12,8 +12,8 @@ async function createUser(req, res) {
         await newUser.save()
         res.send(`user created ${newUser}`).status(200)
     } catch (error) {
-        console.error('Error creating user:', error);
-        res.send('Internal Server Error').status(500);
+        console.error(`Error creating user:`, error);
+        res.send(`Internal Server Error`).status(500);
     }
 }
 
@@ -21,7 +21,7 @@ async function updateUser(req, res) {
     try {
         const tempUser = await User.findOne({ id: req.params.id })
         if (!tempUser) {
-            return res.send("This id does not exist").status(404)
+            return res.send(`This id does not exist`).status(404)
         }
         else {
             if (req.body.fullName) {
@@ -38,8 +38,8 @@ async function updateUser(req, res) {
         }
     }
     catch (err) {
-        console.error('Error updating user:', err);
-        res.status(500).send('Internal Server Error');
+        console.error(`Error updating user:`, err);
+        res.status(500).send(`Internal Server Error`);
     }
 }
 
