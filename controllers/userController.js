@@ -1,16 +1,16 @@
-const userModel = require('../data/service')
+const userService = require('../data/service')
 
 function createUser(req, res) {
-    userModel.createUser(req, res)
+    userService.createUser(req, res)
 }
 
 function updateUser(req, res) {
-    userModel.updateUser(req, res)
+    userService.updateUser(req, res)
 }
 
 async function deleteUser(req, res) {
     try {
-        const user = await userModel.deleteUser(req.params.id)
+        const user = await userService.deleteUser(req.params.id)
         if (!user) {
             res.status(404).send('user not found')
         }
@@ -25,7 +25,7 @@ async function deleteUser(req, res) {
 
 async function getUserById(req, res) {
     try {
-        const user = await userModel.getUserById(req.params.id)
+        const user = await userService.getUserById(req.params.id)
         if (!user) {
             res.status(404).send('user not found')
         }
