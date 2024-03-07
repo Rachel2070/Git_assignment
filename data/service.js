@@ -10,10 +10,10 @@ async function createUser(req, res) {
             tel: req.body.tel
         })
         await newUser.save()
-            res.send(`user created ${newUser}`).status(200)
+        res.send(`user created ${newUser}`).status(200)
     } catch (error) {
-        console.error('Error creating user:', error);
-        res.send('Internal Server Error').status(500);
+        console.error(`Error creating user: ${err}`);
+        res.send(`Internal Server Error`).status(500);
     }
 }
 
@@ -21,7 +21,7 @@ async function updateUser(req, res) {
     try {
         const tempUser = await User.findOne({ id: req.params.id })
         if (!tempUser) {
-            return res.send("This id does not exist").status(404)
+            return res.send(`This id does not exist`).status(404)
         }
         else {
             if (req.body.fullName) {
@@ -38,38 +38,30 @@ async function updateUser(req, res) {
         }
     }
     catch (err) {
-        console.error('Error updating user:', err);
-        res.status(500).send('Internal Server Error');
+        console.error(`Error updating user: ${err}`);
+        res.status(500).send(`Internal Server Error`);
     }
 }
 
-async function deleteUser(req, res) {
+async function deleteUser(id) {
     try {
-        const userToDelete = await User.findOneAndDelete({ id: req.params.id })
-        if (!userToDelete) {
-            return res.send("This id does not exist").status(404)
-        }
-        res.send('user deleted').status(200)
+        const userToDelete = await User.findOneAndDelete({ id: id })
+        return userToDelete
     }
-    catch (error) {
-        console.error('Error deleting user:', error);
-        res.status(500).send('Internal Server Error');
+    catch (err) {
+        new Error(`Error: Could not delete this user ${err}`)
     }
 
 }
 
-async function getUserById(req, res) {
-    try{
-        const findUser = await User.findOne({ id: req.params.id })
-    if (!findUser) {
-        return res.send("This id does not exist").status(404)
+async function getUserById(id) {
+    try {
+        const findUser = await User.findOne({ id: id })     
+        return findUser
     }
-    res.send(findUser).status(200)
+    catch (err) {
+        throw new Error(`Error: Could not get this user ${err}`)
     }
-    catch (error) {
-        console.error('Error deleting user:', error);
-        res.status(500).send('Internal Server Error');
-    } 
 }
 
 module.exports = { createUser, updateUser, deleteUser, getUserById }
