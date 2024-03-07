@@ -1,11 +1,25 @@
 const userService = require('../data/service')
 
-function createUser(req, res) {
-    userService.createUser(req, res)
+async function createUser(req, res) {
+    try {
+        const newUser = await userService.createUser(req.body)
+        res.status(200).send(`user created ${newUser}`)
+    } catch (error) {
+        res.status(500).send(`Internal Server Error ${error}`);
+    }
 }
 
-function updateUser(req, res) {
-    userService.updateUser(req, res)
+async function updateUser(req, res) {
+    try {
+        const user = await userService.updateUser(req.params.id, req.body);
+        if (user == null) {
+            res.status(404).send(`This id does not exist`);
+        } else {
+            res.status(200).send(`User updated: ${user}`);
+        }
+    } catch (error) {
+        res.status(500).send(`Error updating user: ${error}`);
+    }
 }
 
 async function deleteUser(req, res) {

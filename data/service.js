@@ -1,45 +1,42 @@
 const User = require('./mongooseSchema')
 
-
-async function createUser(req, res) {
+async function createUser(user) {
     try {
         const newUser = new User({
-            id: req.body.id,
-            fullName: req.body.fullName,
-            email: req.body.email,
-            tel: req.body.tel
+            id: user.id,
+            fullName:user.fullName,
+            email: user.email,
+            tel:user.tel
         })
         await newUser.save()
-        res.send(`user created ${newUser}`).status(200)
+        return newUser;
     } catch (error) {
-        console.error(`Error creating user: ${err}`);
-        res.send(`Internal Server Error`).status(500);
+        throw new Error(`${error}`)
     }
 }
 
-async function updateUser(req, res) {
+async function updateUser(useId,user) {
     try {
-        const tempUser = await User.findOne({ id: req.params.id })
+        const tempUser = await User.findOne({ id: useId })
         if (!tempUser) {
-            return res.send(`This id does not exist`).status(404)
+            return tempUser
         }
         else {
-            if (req.body.fullName) {
-                tempUser.fullName = req.body.fullName;
+            if (user.fullName) {
+                tempUser.fullName = user.fullName;
             }
-            if (req.body.email) {
-                tempUser.email = req.body.email;
+            if (user.email) {
+                tempUser.email = user.email;
             }
-            if (req.body.tel) {
-                tempUser.tel = req.body.tel;
+            if (user.tel) {
+                tempUser.tel = user.tel;
             }
-            const userToUpdate = await User.findOneAndUpdate({ id: req.params.id }, tempUser, { new: true })
-            res.send(`user updated ${userToUpdate}`)
+            const userToUpdate = await User.findOneAndUpdate({ id: useId }, tempUser, { new: true })
+            return userToUpdate
         }
     }
-    catch (err) {
-        console.error(`Error updating user: ${err}`);
-        res.status(500).send(`Internal Server Error`);
+    catch (eror) {
+        throw new Error(`${eror}`);
     }
 }
 
