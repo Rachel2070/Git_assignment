@@ -18,7 +18,7 @@ async function updateUser(req, res) {
             res.status(200).send(`User updated: ${user}`);
         }
     } catch (error) {
-        res.status(500).send(`Error updating user: ${error.message}`);
+        res.status(500).send(`Error updating user: ${error}`);
     }
 }
 
