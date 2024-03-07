@@ -12,7 +12,7 @@ async function createUser(req, res) {
         await newUser.save()
         res.send(`user created ${newUser}`).status(200)
     } catch (error) {
-        console.error(`Error creating user:`, error);
+        console.error(`Error creating user: ${err}`);
         res.send(`Internal Server Error`).status(500);
     }
 }
@@ -38,7 +38,7 @@ async function updateUser(req, res) {
         }
     }
     catch (err) {
-        console.error(`Error updating user:`, err);
+        console.error(`Error updating user: ${err}`);
         res.status(500).send(`Internal Server Error`);
     }
 }
