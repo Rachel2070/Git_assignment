@@ -1,4 +1,4 @@
-const User = require('./mongooseSchema')
+const User = require('./mongoose.schema')
 
 
 async function createUser(user) {

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +18,8 @@
     "mongodb": "^6.4.0",
     "mongoose": "^8.2.1",
     "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "jets": "^0.15.0"
   }
 }
