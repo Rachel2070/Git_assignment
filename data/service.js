@@ -11,7 +11,7 @@ async function createUser(req, res) {
         })
         await newUser.save()
         res.send(`user created ${newUser}`).status(200)
-    } catch (error) {
+    } catch (err) {
         console.error(`Error creating user: ${err}`);
         res.send(`Internal Server Error`).status(500);
     }
