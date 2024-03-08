@@ -6,7 +6,8 @@ async function createUser(req, res) {
         const newUser = await userService.createUser(req.body)
         res.status(200).send(`user created ${newUser}`)
     } catch (error) {
-        res.status(500).send(`Internal Server Error ${error}`);
+        console.log(error);
+        res.status(500).send(`Internal Server Error`);
     }
 }
 
@@ -19,7 +20,8 @@ async function updateUser(req, res) {
             res.status(200).send(`User updated: ${user}`);
         }
     } catch (error) {
-        res.status(500).send(`Error updating user: ${error}`);
+        console.log(error);
+        res.status(500).send(`Error updating user`);
     }
 }
 
@@ -30,13 +32,14 @@ async function deleteUser(req, res) {
             res.status(404).send(`user not found`)
         }
         else{
-            res.send(`user was deleted`).status(200)
+            res.status(200).send(`user was deleted`)
         }
     }
     catch (err) {
-        res.status(400).send(err)
+        res.status(404).send(`${err}`);
     }
 }
+
 
 async function getUserById(req, res) {
     try {
@@ -44,12 +47,13 @@ async function getUserById(req, res) {
         if (!user) {
             res.status(404).send(`user not found`)
         }
-        else{
+        else {
             res.status(200).send(user)
         }
     }
     catch (err) {
-        res.status(400).send(err)
+        console.log(err);
+        res.status(400).send(`Error retrieving user`)
     }
 }
 

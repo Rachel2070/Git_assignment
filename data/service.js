@@ -50,7 +50,6 @@ async function deleteUser(id) {
     catch (err) {
         new Error(`Error: Could not delete this user ${err}`)
     }
-
 }
 
 async function getUserById(id) {
