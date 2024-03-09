@@ -1,5 +1,5 @@
-const userService=require('../data/service')
-const userController=require('../controllers/user.controller')
+const userService=require('../data/service');
+const {getUserById}=require('../controllers/user.controller')
 
 jest.mock('../data/service',()=>({
     getUserById:jest.fn(),
@@ -19,7 +19,7 @@ describe('getUserById',()=>{
 
         userService.getUserById.mockResolvedValueOnce(user)
 
-        await userController.getUserById(req,res)
+        await getUserById(req,res)
 
         expect(res.status).toHaveBeenCalledWith(200)
         expect(res.send).toHaveBeenCalledWith(user)
@@ -31,7 +31,7 @@ describe('getUserById',()=>{
 
         userService.getUserById.mockResolvedValueOnce(null)
 
-        await userController.getUserById(req,res)
+        await getUserById(req,res)
 
         expect(res.status).toHaveBeenCalledWith(404)
         expect(res.send).toHaveBeenCalledWith('user not found')
@@ -43,7 +43,7 @@ describe('getUserById',()=>{
 
         userService.getUserById.mockRejectedValueOnce('some error');
 
-        await userController.getUserById(req,res)
+        await getUserById(req,res)
 
         expect(res.status).toHaveBeenCalledWith(400)
         expect(res.send).toHaveBeenCalledWith('some error')

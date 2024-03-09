@@ -1,5 +1,5 @@
 const userService = require('../data/service')
-const userController = require('../controllers/user.controller')
+const {deleteUser} = require('../controllers/user.controller')
 
 jest.mock('../data/service', () => ({
     deleteUser: jest.fn(),
@@ -13,7 +13,7 @@ describe('deleteUser',()=>{
     
         userService.deleteUser.mockResolvedValueOnce({ id: userId })
     
-        await userController.deleteUser(req, res)
+        await deleteUser(req, res)
     
         expect(res.status).toHaveBeenCalledWith(200)
         expect(res.send).toHaveBeenCalledWith('user was deleted')
@@ -26,7 +26,7 @@ describe('deleteUser',()=>{
     
         userService.deleteUser.mockResolvedValueOnce(null)
     
-        await userController.deleteUser(req, res)
+        await deleteUser(req, res)
     
         expect(res.status).toHaveBeenCalledWith(404)
         expect(res.send).toHaveBeenCalledWith('user not found')
