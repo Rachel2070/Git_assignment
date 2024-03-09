@@ -40,23 +40,18 @@ async function deleteUser(req, res) {
     }
 }
 
-
 async function getUserById(req, res) {
     try {
         const user = await userService.getUserById(req.params.id)
         if (!user) {
             res.status(404).send(`user not found`)
         }
-        else {
+        else{
             res.status(200).send(user)
         }
     }
     catch (err) {
-        console.log(err);
-        res.status(400).send(`Error retrieving user`)
+        res.status(400).send(err)
     }
 }
-
-
-
 module.exports = { createUser, updateUser, deleteUser, getUserById }
