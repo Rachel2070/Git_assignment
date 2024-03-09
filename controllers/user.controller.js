@@ -6,7 +6,8 @@ async function createUser(req, res) {
         const newUser = await userService.createUser(req.body)
         res.status(200).send(`user created ${newUser}`)
     } catch (error) {
-        res.status(500).send(`Internal Server Error ${error}`);
+        console.log(error);
+        res.status(500).send(`Internal Server Error`);
     }
 }
 
@@ -19,7 +20,8 @@ async function updateUser(req, res) {
             res.status(200).send(`User updated: ${user}`);
         }
     } catch (error) {
-        res.status(500).send(`Error updating user: ${error}`);
+        console.log(error);
+        res.status(500).send(`Error updating user`);
     }
 }
 
@@ -37,7 +39,7 @@ async function deleteUser(req, res) {
         res.status(404).send(`${err}`);
     }
 }
-  
+
 async function getUserById(req, res) {
     try {
         const user = await userService.getUserById(req.params.id)
