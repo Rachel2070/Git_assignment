@@ -1,4 +1,5 @@
-const User = require('./mongooseSchema')
+const User = require('./mongoose.schema')
+
 
 async function createUser(user) {
     try {
@@ -40,6 +41,7 @@ async function updateUser(useId,user) {
     }
 }
 
+
 async function deleteUser(id) {
     try {
         const userToDelete = await User.findOneAndDelete({ id: id })
@@ -48,7 +50,6 @@ async function deleteUser(id) {
     catch (err) {
         new Error(`Error: Could not delete this user ${err}`)
     }
-
 }
 
 async function getUserById(id) {

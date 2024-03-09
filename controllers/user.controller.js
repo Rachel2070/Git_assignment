@@ -1,5 +1,6 @@
 const userService = require('../data/service')
 
+
 async function createUser(req, res) {
     try {
         const newUser = await userService.createUser(req.body)
@@ -29,14 +30,14 @@ async function deleteUser(req, res) {
             res.status(404).send(`user not found`)
         }
         else{
-            res.send(`user was deleted`).status(200)
+            res.status(200).send(`user was deleted`)
         }
     }
     catch (err) {
-        res.status(400).send(err)
+        res.status(404).send(`${err}`);
     }
 }
-
+  
 async function getUserById(req, res) {
     try {
         const user = await userService.getUserById(req.params.id)
@@ -51,6 +52,4 @@ async function getUserById(req, res) {
         res.status(400).send(err)
     }
 }
-
-
 module.exports = { createUser, updateUser, deleteUser, getUserById }
